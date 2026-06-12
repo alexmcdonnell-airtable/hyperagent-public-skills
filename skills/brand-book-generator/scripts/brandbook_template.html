@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- ============================================================
+  BRAND CONCEPT GENERATOR — single-screen "brand book" template
+  ONE no-scroll hero (100vh). A bento brand book — logo+tagline, in-app
+  screen, out-of-home/billboard, merch, palette, type, voice — that
+  ASSEMBLES ITSELF with a staggered pop on every toggle. Three routes;
+  toggling re-skins the whole canvas (color + fonts + radius) and swaps
+  every mockup. Blinking cursor + self-typing tagline retained.
+
+  ADAPT FOR A NEW APP — edit only:
+   1. <title>, the .brand wordmark, .meta tail copy  -> app name + one-liner
+   2. the three theme token blocks body[data-route="r1|r2|r3"] -> palette + fonts + radius
+   3. the Google Fonts <link> -> the families you used
+   4. the toggle button labels -> route names
+   5. the ROUTES {} object -> all copy + the 9 public image URLs
+   6. .wordmark-big text in the logo tile -> the app name (lowercase ok)
+
+  CONCEPT RULES (2026):
+   - Ground routes in current trends, not safe defaults. Live 2026 trends:
+     claymorphism (soft inflated 3D), neo-brutalism + hi-vis dopamine color +
+     monospace, Y2K liquid chrome / retrofuture, maximalism / structured excess,
+     kinetic & oversized variable type, bento. (Aurora/mesh-gradient UI is a
+     trend too, but it's blue/purple by default — see the HARD RULE below.)
+   - The three routes MUST diverge on canvas VALUE (don't ship three darks),
+     font pairing, surface texture (matte-glow / flat-raw / glossy-metal),
+     accent family, and voice. Bold > safe. Avoid the over-trained
+     cream + burnt-orange + serif look and generic noir.
+   - HARD RULE: NEVER use blue or purple gradients (incl. the indigo->cyan->
+     magenta "aurora"/AI-native gradient). It reads as the generic default
+     everyone ships. If you want dimension, reach for claymorphism (warm soft
+     3D), chrome/iridescent, hi-vis flat color, or maximalist clashing flats
+     instead. Warm-sunset or acid gradients are fine; blue/purple are not.
+   - Render the wordmark INTO the mockups (GPT Image 2 handles short text
+     well) so billboards/merch/in-app read as real brand applications.
+
+  IMAGES: per route generate in-app (1:1), billboard (9:16), merch (3:2),
+  each art-directed to the route. Then PublishFilePublicly EACH and use the
+  pub.hyperagent.com URLs below (thread-scoped /api/files URLs break in the
+  sandboxed iframe).
+============================================================ -->
+<title>APP_NAME — Brand Book</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Syne:wght@600;700;800&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{ --ease:cubic-bezier(.22,.9,.3,1); }
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+body{font-family:var(--text);background:var(--bg);color:var(--fg);transition:background-color .6s var(--ease),color .6s var(--ease);}
+
+/* THEME TOKENS — one block per route key r1/r2/r3 (keys must stay r1/r2/r3) */
+body[data-route="r1"]{ /* e.g. PUTTY — claymorphism / warm tactile (NO blue/purple) */
+  --bg:#FFE3CC;--fg:#3A241B;--muted:#A8714C;--line:#3a241b1f;--tile:#FFF4EA;--tile2:#FFE9D6;
+  --accent:#FF7A2F;--accent2:#FF4D6D;--radius:30px;
+  --display:'Fredoka',sans-serif;--text:'Nunito',sans-serif;--mono:'Spline Sans Mono',monospace;}
+body[data-route="r2"]{ /* e.g. VOLT — neo-brutalist hi-vis / mono */
+  --bg:#EAEAE3;--fg:#0E0E0C;--muted:#74746a;--line:#0e0e0c26;--tile:#FBFBF7;--tile2:#F2F2EC;
+  --accent:#C8FF00;--accent2:#1F4DFF;--radius:0px;
+  --display:'Space Mono',monospace;--text:'Space Mono',monospace;--mono:'Space Mono',monospace;}
+body[data-route="r3"]{ /* e.g. CHROME — Y2K liquid chrome / retrofuture */
+  --bg:#08080A;--fg:#EDEDF2;--muted:#8A8A98;--line:#ffffff1a;--tile:#131318;--tile2:#0e0e12;
+  --accent:#E8C7FF;--accent2:#8FE8FF;--radius:14px;
+  --display:'Syne',sans-serif;--text:'Space Grotesk',sans-serif;--mono:'Space Mono',monospace;}
+
+.shell{height:100vh;display:flex;flex-direction:column;padding:clamp(12px,1.6vw,22px);gap:clamp(10px,1.3vw,16px);}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;flex:none;}
+.brand{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted);}
+.brand b{color:var(--fg);font-weight:700;letter-spacing:.16em}
+.brand .pip{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent)}
+.toggle{display:flex;gap:6px;background:var(--tile);border:1px solid var(--line);border-radius:100px;padding:5px;}
+body[data-route="r2"] .toggle{border-radius:0}
+.tg{appearance:none;border:none;background:transparent;color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;padding:9px 16px;border-radius:100px;transition:all .3s var(--ease);display:flex;align-items:center;gap:8px;}
+body[data-route="r2"] .tg{border-radius:0}
+.tg .n{opacity:.6;font-size:10px}
+.tg:hover{color:var(--fg)}
+.tg.on{background:var(--accent);color:#08080A;font-weight:700}
+body[data-route="r1"] .tg.on{background:var(--accent);color:#fff}
+body[data-route="r3"] .tg.on{background:linear-gradient(180deg,#fff,#c2c2d0 55%,#85858f);color:#08080A}
+.meta{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);text-align:right;white-space:nowrap}
+.meta b{color:var(--fg);font-weight:500}
+@media(max-width:760px){.meta{display:none}}
+
+.stage{flex:1;min-height:0;perspective:1600px;}
+.bento{height:100%;display:grid;gap:clamp(8px,1vw,14px);transform-style:preserve-3d;transition:transform .2s ease-out;
+  grid-template-columns:1.15fr 1fr 1fr 1fr 1fr .92fr;grid-template-rows:1fr 1fr .82fr;
+  grid-template-areas:"logo logo logo app app bill" "logo logo logo merch merch bill" "pal pal type type voice bill";}
+@media(max-width:900px){
+  html,body{overflow:auto}.shell{height:auto}
+  .bento{grid-template-columns:1fr 1fr;grid-template-rows:none;grid-auto-rows:minmax(150px,auto);
+    grid-template-areas:"logo logo" "app merch" "bill bill" "pal type" "voice voice";}}
+
+.tile{position:relative;overflow:hidden;background:var(--tile);border:1px solid var(--line);border-radius:var(--radius);transition:background-color .6s var(--ease),border-color .6s var(--ease);}
+@keyframes assemble{0%{opacity:0;transform:translateY(26px) scale(.93);filter:blur(7px)}100%{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
+.bento.go .tile{animation:assemble .72s var(--ease) both;animation-delay:calc(var(--d,0)*.075s)}
+.tlabel{position:absolute;top:12px;left:14px;z-index:3;font-family:var(--mono);font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);}
+.tile img{width:100%;height:100%;object-fit:cover;display:block}
+.tile .imgwrap{position:absolute;inset:0}
+.tile .imgwrap::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.28),transparent 30%);pointer-events:none}
+
+.tile-logo{grid-area:logo;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(18px,2.4vw,34px);}
+body[data-route="r1"] .tile-logo{background:radial-gradient(58% 52% at 16% 20%,#FFC23D 0%,transparent 60%),radial-gradient(54% 56% at 86% 24%,#FF9A3D 0%,transparent 60%),radial-gradient(72% 64% at 80% 94%,#FF6B8A 0%,transparent 60%),#FFEAD8;}
+body[data-route="r2"] .tile-logo{background:linear-gradient(var(--line) 1px,transparent 1px) 0 0/100% 38px,linear-gradient(90deg,var(--line) 1px,transparent 1px) 0 0/38px 100%,#FBFBF7;}
+body[data-route="r3"] .tile-logo{background:radial-gradient(120% 100% at 20% 0%,#2a2a36 0%,transparent 55%),linear-gradient(180deg,#16161c,#0c0c10),repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 3px);}
+.logo-head{display:flex;justify-content:space-between;align-items:flex-start;font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;}
+.route-tag{color:var(--accent)}.route-idx{color:var(--muted)}
+.wordmark-big{font-family:var(--display);font-weight:800;font-size:clamp(40px,7.2vw,104px);line-height:.86;letter-spacing:-.03em;display:flex;align-items:flex-end;margin:auto 0 2px;}
+body[data-route="r1"] .wordmark-big{color:#FF6A2C;text-transform:lowercase;letter-spacing:-.03em;font-weight:700;text-shadow:0 5px 0 #E1551F,0 11px 20px rgba(180,70,30,.30);}
+body[data-route="r2"] .wordmark-big{color:var(--fg);text-transform:lowercase;letter-spacing:-.04em;background:linear-gradient(transparent 62%,var(--accent) 0 92%,transparent 0);box-decoration-break:clone;-webkit-box-decoration-break:clone;padding:0 .04em;align-self:flex-start;}
+body[data-route="r3"] .wordmark-big{background:linear-gradient(176deg,#ffffff 6%,#cfd0dc 34%,#7e7f8d 52%,#f3f4fb 60%,#a9aab8 78%,#e9eaf3);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 2px 10px rgba(180,200,255,.18));letter-spacing:-.02em;}
+.wm-caret{display:inline-block;width:.5ch;height:.84em;margin-left:.06em;background:var(--accent);align-self:center;animation:blink 1.05s steps(1) infinite;}
+body[data-route="r3"] .wm-caret{background:var(--accent2)}
+@keyframes blink{0%,50%{opacity:1}51%,100%{opacity:0}}
+.tagline{font-family:var(--mono);font-size:clamp(13px,1.5vw,18px);min-height:1.5em;letter-spacing:.01em;color:var(--fg);margin-top:10px;}
+.tagline .tc{display:inline-block;width:.55ch;height:1.05em;background:var(--accent);transform:translateY(.16em);margin-left:1px;animation:blink 1s steps(1) infinite}
+.positioning{font-size:clamp(12.5px,1.15vw,15px);line-height:1.55;color:var(--fg);opacity:.82;max-width:52ch;margin-top:12px;}
+.tone{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.tone span{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg);border:1px solid var(--line);padding:6px 11px;border-radius:100px}
+body[data-route="r2"] .tone span{border-radius:0;background:var(--accent);color:#0E0E0C;border-color:transparent}
+
+.tile-app{grid-area:app}.tile-merch{grid-area:merch}.tile-bill{grid-area:bill}
+.tile-bill .tlabel{color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.7)}
+.tile-app .tlabel,.tile-merch .tlabel{color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.7);mix-blend-mode:difference}
+
+.tile-pal{grid-area:pal;padding:clamp(14px,1.6vw,22px);display:flex;flex-direction:column;}
+.swatches{margin-top:auto;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.sw{display:flex;flex-direction:column;gap:7px}
+.sw .chip{height:clamp(34px,5vh,56px);border-radius:8px;border:1px solid var(--line)}
+body[data-route="r2"] .sw .chip{border-radius:0}
+.sw .nm{font-family:var(--mono);font-size:10px;color:var(--fg)}
+.sw .hx{font-family:var(--mono);font-size:9px;color:var(--muted);text-transform:uppercase}
+
+.tile-type{grid-area:type;padding:clamp(14px,1.6vw,22px);display:flex;flex-direction:column;justify-content:flex-end;gap:6px;overflow:hidden}
+.spec-display{font-family:var(--display);font-weight:800;font-size:clamp(30px,4.6vw,60px);line-height:.9;letter-spacing:-.02em;color:var(--fg)}
+body[data-route="r1"] .spec-display{color:var(--accent)}
+body[data-route="r3"] .spec-display{background:linear-gradient(176deg,#fff,#bcbdca 55%,#83838f);-webkit-background-clip:text;background-clip:text;color:transparent}
+body[data-route="r2"] .spec-display{text-transform:uppercase}
+.spec-meta{display:flex;justify-content:space-between;gap:10px;font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:.04em;border-top:1px solid var(--line);padding-top:8px}
+.spec-meta b{color:var(--fg);font-weight:500}
+.spec-mono{font-family:var(--mono);font-size:12px;color:var(--accent)}
+.tile-voice{grid-area:voice;padding:clamp(14px,1.6vw,22px);display:flex;flex-direction:column;justify-content:flex-end}
+.voice-line{font-family:var(--display);font-weight:700;font-size:clamp(16px,1.9vw,25px);line-height:1.12;letter-spacing:-.01em;color:var(--fg)}
+body[data-route="r3"] .voice-line{font-family:'Space Grotesk',sans-serif}
+.hint{position:fixed;bottom:10px;left:50%;transform:translateX(-50%);z-index:40;font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);opacity:.8;transition:opacity .5s}
+@media(max-width:900px){.hint{display:none}}
+</style>
+</head>
+<body data-route="r1">
+<div class="shell">
+  <div class="topbar">
+    <div class="brand"><span class="pip"></span><b>APP_NAME</b> Brand Book</div>
+    <div class="toggle" id="toggle">
+      <button class="tg on" data-route="r1"><span class="n">01</span>Route One</button>
+      <button class="tg" data-route="r2"><span class="n">02</span>Route Two</button>
+      <button class="tg" data-route="r3"><span class="n">03</span>Route Three</button>
+    </div>
+    <div class="meta" id="meta">Route <b id="metaIdx">01 / 03</b><br>ONE_LINE_DESCRIPTION</div>
+  </div>
+  <div class="stage">
+    <div class="bento" id="bento">
+      <div class="tile tile-logo" style="--d:0">
+        <div class="logo-head"><span class="route-tag" id="routeTag"></span><span class="route-idx" id="routeIdx"></span></div>
+        <div class="wordmark-big">APP_NAME<span class="wm-caret"></span></div>
+        <div class="tagline" id="tagline"></div>
+        <div class="positioning" id="positioning"></div>
+        <div class="tone" id="tone"></div>
+      </div>
+      <div class="tile tile-app" style="--d:1"><span class="tlabel">In-app</span><div class="imgwrap"><img id="imgApp" alt="in-app"/></div></div>
+      <div class="tile tile-merch" style="--d:2"><span class="tlabel">Merch</span><div class="imgwrap"><img id="imgMerch" alt="merch"/></div></div>
+      <div class="tile tile-bill" style="--d:3"><span class="tlabel">Out-of-home</span><div class="imgwrap"><img id="imgBill" alt="billboard"/></div></div>
+      <div class="tile tile-pal" style="--d:4"><span class="tlabel">Palette</span><div class="swatches" id="swatches"></div></div>
+      <div class="tile tile-type" style="--d:5"><span class="tlabel">Type</span><div class="spec-display" id="specDisplay"></div><div class="spec-mono" id="specMono"></div><div class="spec-meta" id="specMeta"></div></div>
+      <div class="tile tile-voice" style="--d:6"><span class="tlabel">Voice</span><div class="voice-line" id="voiceLine"></div></div>
+    </div>
+  </div>
+</div>
+<div class="hint" id="hint">tab between routes — watch the book rebuild</div>
+<script>
+/* EDIT ZONE: three routes. Keys MUST stay r1/r2/r3 (they map to the theme blocks).
+   Fill app/bill/merch with PUBLIC pub.hyperagent.com URLs. */
+const ROUTES={
+  r1:{ name:"Route One", idx:"01 / 03", tagline:"Tagline types itself in.",
+    positioning:"One-paragraph positioning for route one.",
+    tone:["Tag","Tag","Tag"],
+    palette:[["Apricot","#FFE3CC"],["Tangerine","#FF7A2F"],["Coral","#FF4D6D"],["Butter","#FFC23D"]],
+    specDisplay:"Squish", specMono:"press -> pop", typeName:"Fredoka",
+    voice:"A punchy verbal-identity line.",
+    app:"", bill:"", merch:"" },
+  r2:{ name:"Route Two", idx:"02 / 03", tagline:"Second tagline.",
+    positioning:"One-paragraph positioning for route two — a different world.",
+    tone:["Tag","Tag","Tag"],
+    palette:[["Name","#EAEAE3"],["Name","#0E0E0C"],["Name","#C8FF00"],["Name","#1F4DFF"]],
+    specDisplay:"WORD", specMono:"// mono", typeName:"Space Mono",
+    voice:"A second verbal-identity line.",
+    app:"", bill:"", merch:"" },
+  r3:{ name:"Route Three", idx:"03 / 03", tagline:"Third tagline.",
+    positioning:"One-paragraph positioning for route three.",
+    tone:["Tag","Tag","Tag"],
+    palette:[["Name","#08080A"],["Name","#D7D7E2"],["Name","#E8C7FF"],["Name","#8FE8FF"]],
+    specDisplay:"Word", specMono:"mono", typeName:"Syne",
+    voice:"A third verbal-identity line.",
+    app:"", bill:"", merch:"" }
+};
+const ORDER=["r1","r2","r3"];
+const $=id=>document.getElementById(id);
+const bento=$("bento");
+let typer=null;
+function typeTag(text){if(typer)clearTimeout(typer);const el=$("tagline");el.innerHTML="";
+  const c=document.createElement("span");c.className="tc";el.appendChild(c);let i=0;
+  (function step(){if(i<text.length){c.insertAdjacentText("beforebegin",text[i]);i++;typer=setTimeout(step,42+Math.random()*40);}})();}
+function activate(key){const r=ROUTES[key];document.body.dataset.route=key;
+  document.querySelectorAll(".tg").forEach(b=>b.classList.toggle("on",b.dataset.route===key));
+  $("routeTag").textContent=r.name;$("routeIdx").textContent=r.idx;$("metaIdx").textContent=r.idx;
+  $("positioning").textContent=r.positioning;$("tone").innerHTML=r.tone.map(t=>`<span>${t}</span>`).join("");
+  $("imgApp").src=r.app;$("imgMerch").src=r.merch;$("imgBill").src=r.bill;
+  $("swatches").innerHTML=r.palette.map(p=>`<div class="sw"><div class="chip" style="background:${p[1]}"></div><div class="nm">${p[0]}</div><div class="hx">${p[1]}</div></div>`).join("");
+  $("specDisplay").textContent=r.specDisplay;$("specMono").textContent=r.specMono;
+  $("specMeta").innerHTML=`<span>Display</span><span><b>${r.typeName}</b></span>`;$("voiceLine").textContent=r.voice;
+  bento.classList.remove("go");void bento.offsetWidth;bento.classList.add("go");typeTag(r.tagline);}
+$("toggle").addEventListener("click",e=>{const b=e.target.closest(".tg");if(b)activate(b.dataset.route);});
+document.addEventListener("keydown",e=>{const i=ORDER.indexOf(document.body.dataset.route);
+  if(e.key==="ArrowRight")activate(ORDER[(i+1)%3]);if(e.key==="ArrowLeft")activate(ORDER[(i+2)%3]);});
+let tx=0,ty=0,cxv=0,cyv=0;
+window.addEventListener("pointermove",e=>{tx=(e.clientX/innerWidth-.5);ty=(e.clientY/innerHeight-.5);});
+(function tilt(){cxv+=(tx-cxv)*.06;cyv+=(ty-cyv)*.06;bento.style.transform=`rotateY(${cxv*2.2}deg) rotateX(${-cyv*2.2}deg)`;requestAnimationFrame(tilt);})();
+setTimeout(()=>{const h=$("hint");if(h)h.style.opacity="0";},6000);
+activate("r1");
+</script>
+</body>
+</html>
+
