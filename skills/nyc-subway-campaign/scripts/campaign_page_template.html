@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- ============================================================
+  NYC SUBWAY CAMPAIGN — agency case-study page template
+  A single scrolling, art-directed deliverable:
+  masthead → brief → manifesto/idea → brand book (logo/palette/type/voice)
+  → the work in real subway context → the copy lines → media run → footer.
+
+  ADAPT FOR A NEW BRAND — edit only:
+   1. <title>, the .brandmark wordmark text, masthead tail copy
+   2. the :root color tokens (5-brand palette) + the Google Fonts <link>
+   3. all copy (h1 brief, manifesto, captions, lines, media table)
+   4. the 7 image src= URLs -> PUBLIC pub.hyperagent.com URLs
+      (run every GenerateImage output through PublishFilePublicly first;
+       thread-scoped /api/files URLs break in the sandboxed iframe)
+   5. the inline SVG mark (swap for the brand's own simple symbol)
+
+  HARD RULES: never blue/purple gradients (reads as generic AI default).
+  Keep overlay text on photos white-with-shadow so it survives image swaps.
+============================================================ -->
+<title>BRAND — Campaign</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- EDIT: pick a display + text pairing that fits the brief (this default = soft serif + humanist sans) -->
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* EDIT: the brand palette — 5 tokens. NO blue/purple gradients. */
+  --ink:#0C2A1E; --ink2:#12382A; --accent:#1FA866; --accent-deep:#0E6B43;
+  --paper:#FBFAF3; --paper2:#F2EEDF; --pop1:#F6B53C; --pop2:#FF6A52;
+  --line:rgba(12,42,30,.14); --line-soft:rgba(12,42,30,.08);
+  --ease:cubic-bezier(.22,.9,.3,1);
+  --display:'Fraunces',Georgia,serif; --text:'Plus Jakarta Sans',system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--text);background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.55;overflow-x:hidden}
+img{display:block;max-width:100%}
+.wrap{max-width:1240px;margin:0 auto;padding:0 clamp(22px,5vw,72px)}
+.kicker{font-size:12px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--accent-deep)}
+.leaf{width:1em;height:1em;display:inline-block;vertical-align:-.12em}
+
+.mast{position:sticky;top:0;z-index:50;background:rgba(251,250,243,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line-soft)}
+.mast .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+.brandmark{display:flex;align-items:center;gap:9px;font-family:var(--display);font-weight:600;font-size:22px;letter-spacing:-.01em}
+.brandmark .leaf{color:var(--accent);width:22px;height:22px}
+.mast .tail{font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-deep)}
+@media(max-width:640px){.mast .tail{display:none}}
+
+.hero-frame{position:relative;overflow:hidden}
+.hero-frame img{width:100%;height:min(82vh,720px);object-fit:cover}
+.hero-cap{position:absolute;left:0;bottom:0;width:100%;padding:clamp(18px,3vw,34px);background:linear-gradient(0deg,rgba(8,28,18,.62),transparent);display:flex;justify-content:space-between;align-items:flex-end;gap:18px}
+.hero-cap .c-left{color:#fff;font-size:13px;font-weight:600;text-shadow:0 2px 18px rgba(0,0,0,.5)}
+.hero-cap .c-left b{display:block;font-family:var(--display);font-size:clamp(18px,2.2vw,26px);font-weight:600}
+.hero-cap .c-right{color:#fff;font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;opacity:.9;text-shadow:0 2px 18px rgba(0,0,0,.5);white-space:nowrap}
+@media(max-width:640px){.hero-cap .c-right{display:none}}
+
+.lede{padding:clamp(54px,8vw,104px) 0 clamp(20px,4vw,48px)}
+.lede .kicker{margin-bottom:22px}
+.lede h1{font-family:var(--display);font-weight:500;font-size:clamp(30px,5.4vw,68px);line-height:1.04;letter-spacing:-.02em;max-width:18ch}
+.lede h1 em{font-style:italic;color:var(--accent-deep)}
+.lede .sub{margin-top:26px;max-width:60ch;font-size:clamp(16px,1.6vw,20px);color:var(--ink2);opacity:.86}
+.lede .meta{margin-top:34px;display:flex;flex-wrap:wrap;gap:30px;border-top:1px solid var(--line);padding-top:22px}
+.lede .meta span{display:block;font-weight:700;letter-spacing:.16em;text-transform:uppercase;font-size:10.5px;color:var(--accent-deep);margin-bottom:5px}
+.lede .meta b{font-family:var(--display);font-weight:500;font-size:17px}
+
+.sec{padding:clamp(48px,7vw,92px) 0}
+.sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:clamp(28px,4vw,52px)}
+.sec-head .no{font-family:var(--display);font-weight:600;font-size:15px;color:var(--accent)}
+.sec-head h2{font-family:var(--display);font-weight:500;font-size:clamp(26px,3.8vw,46px);line-height:1.05;letter-spacing:-.015em}
+.sec-head .h-tail{margin-left:auto;max-width:34ch;font-size:14px;color:var(--ink2);opacity:.78;text-align:right}
+@media(max-width:760px){.sec-head{flex-direction:column;gap:8px}.sec-head .h-tail{text-align:left;margin-left:0}}
+
+.manifesto{background:var(--ink);color:var(--paper)}
+.manifesto .wrap{padding:clamp(64px,10vw,140px) clamp(22px,5vw,72px)}
+.manifesto .kicker{color:var(--pop1)}
+.manifesto p.big{font-family:var(--display);font-weight:400;font-size:clamp(26px,4.4vw,54px);line-height:1.18;max-width:20ch;margin-top:26px}
+.manifesto p.big em{font-style:italic;color:var(--accent)}
+.manifesto .row{margin-top:clamp(40px,6vw,72px);display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,3vw,40px)}
+.manifesto .it{border-top:1px solid rgba(255,255,255,.18);padding-top:18px}
+.manifesto .it h4{font-family:var(--display);font-weight:600;font-size:19px;color:var(--pop1);margin-bottom:8px}
+.manifesto .it p{font-size:14.5px;color:rgba(251,250,243,.82)}
+@media(max-width:760px){.manifesto .row{grid-template-columns:1fr}}
+
+.bb-grid{display:grid;gap:clamp(14px,1.6vw,22px);grid-template-columns:repeat(12,1fr)}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:20px;overflow:hidden;position:relative}
+.card .lbl{font-size:10.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-deep)}
+.bb-logo{grid-column:span 7;padding:clamp(24px,3vw,44px);display:flex;flex-direction:column;justify-content:space-between;min-height:300px;background:radial-gradient(120% 120% at 0% 0%,#F4FBF6 0%,var(--paper) 55%)}
+.bb-logo .big{font-family:var(--display);font-weight:600;font-size:clamp(44px,7vw,96px);letter-spacing:-.03em;display:flex;align-items:center;gap:.14em;line-height:1}
+.bb-logo .big .leaf{color:var(--accent);width:.78em;height:.78em}
+.variants{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
+.chiplogo{display:flex;align-items:center;gap:7px;font-family:var(--display);font-weight:600;font-size:18px;padding:12px 18px;border-radius:13px}
+.chiplogo .leaf{width:18px;height:18px}
+.chiplogo.on-accent{background:var(--accent);color:#fff}.chiplogo.on-accent .leaf{color:#fff}
+.chiplogo.on-ink{background:var(--ink);color:var(--paper)}.chiplogo.on-ink .leaf{color:var(--pop1)}
+.chiplogo.on-pop{background:var(--pop1);color:var(--ink)}.chiplogo.on-pop .leaf{color:var(--accent-deep)}
+.bb-pal{grid-column:span 5;padding:clamp(22px,2.6vw,32px);display:flex;flex-direction:column}
+.swrow{margin-top:auto;display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:22px}
+.sw .chip{height:64px;border-radius:11px;border:1px solid var(--line-soft)}
+.sw .nm{font-size:11px;font-weight:700;margin-top:9px}
+.sw .hx{font-size:10px;color:var(--ink2);opacity:.65}
+.bb-type{grid-column:span 7;padding:clamp(22px,2.6vw,34px)}
+.bb-type .spec{font-family:var(--display);font-weight:500;font-size:clamp(40px,6vw,76px);line-height:.96;letter-spacing:-.02em;margin:14px 0 6px}
+.bb-type .spec em{font-style:italic;color:var(--accent-deep)}
+.bb-type .specsub{font-family:var(--display);font-weight:500;font-size:clamp(18px,2.2vw,26px)}
+.bb-type .tmeta{display:flex;gap:28px;margin-top:22px;border-top:1px solid var(--line);padding-top:16px;flex-wrap:wrap}
+.bb-type .tmeta span{display:block;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:4px}
+.bb-type .tmeta b{font-weight:600;font-size:13px}
+.bb-voice{grid-column:span 5;padding:clamp(22px,2.6vw,34px);background:var(--accent);color:#fff;display:flex;flex-direction:column}
+.bb-voice .lbl{color:rgba(255,255,255,.85)}
+.bb-voice ul{list-style:none;margin-top:auto;display:flex;flex-direction:column;gap:13px;padding-top:20px}
+.bb-voice li{font-family:var(--display);font-weight:500;font-size:clamp(17px,2vw,22px);line-height:1.18;display:flex;gap:11px;align-items:flex-start}
+.bb-voice li .d{flex:none;width:8px;height:8px;border-radius:50%;background:var(--pop1);margin-top:.6em}
+@media(max-width:860px){.bb-logo,.bb-pal,.bb-type,.bb-voice{grid-column:span 12}}
+
+.workgap{display:flex;flex-direction:column;gap:clamp(20px,3vw,40px)}
+.shot{position:relative;border-radius:20px;overflow:hidden;border:1px solid var(--line);background:var(--paper2)}
+.shot img{width:100%;height:100%;object-fit:cover}
+.shot.feature img{max-height:640px}
+.cap{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:18px 4px 2px}
+.cap .ct{max-width:56ch}
+.cap .ct .fmt{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:6px}
+.cap .ct h3{font-family:var(--display);font-weight:500;font-size:clamp(19px,2.2vw,26px);line-height:1.1}
+.cap .ct p{font-size:14px;color:var(--ink2);opacity:.8;margin-top:6px}
+.cap .idx{font-family:var(--display);font-size:14px;color:var(--accent);font-weight:600;white-space:nowrap}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,3vw,40px);align-items:start}
+@media(max-width:760px){.two{grid-template-columns:1fr}}
+.shot-unit{display:flex;flex-direction:column}
+
+.lines{background:var(--paper2)}
+.lines .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(16px,2.4vw,30px)}
+.linecard{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:clamp(22px,2.8vw,34px);min-height:150px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
+.linecard:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(12,42,30,.10)}
+.linecard q{font-family:var(--display);font-weight:500;font-size:clamp(21px,2.6vw,30px);line-height:1.1;quotes:none}
+.linecard .tag{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-deep);margin-top:18px}
+.linecard.hl{background:var(--ink);color:var(--paper)}.linecard.hl q .g{color:var(--accent)}.linecard.hl .tag{color:var(--pop1)}
+.linecard.co{background:var(--pop2);color:#fff}.linecard.co .tag{color:rgba(255,255,255,.85)}
+@media(max-width:680px){.lines .grid{grid-template-columns:1fr}}
+
+.plan table{width:100%;border-collapse:collapse;font-size:14px}
+.plan th,.plan td{text-align:left;padding:15px 14px;border-bottom:1px solid var(--line)}
+.plan th{font-size:10.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep)}
+.plan td:first-child{font-family:var(--display);font-weight:500;font-size:16px}
+.plan tr:hover td{background:#F4FBF6}
+.plan .qt{font-weight:700;color:var(--accent-deep)}
+
+.foot{background:var(--ink);color:var(--paper)}
+.foot .wrap{padding:clamp(56px,8vw,96px) clamp(22px,5vw,72px) 40px}
+.foot .big{font-family:var(--display);font-weight:500;font-size:clamp(34px,6vw,72px);line-height:1;display:flex;align-items:center;gap:.16em}
+.foot .big .leaf{color:var(--accent);width:.8em;height:.8em}
+.foot .tl{margin-top:18px;font-family:var(--display);font-style:italic;font-size:clamp(18px,2.4vw,26px);color:var(--pop1)}
+.foot .meta{margin-top:46px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:18px;border-top:1px solid rgba(255,255,255,.16);padding-top:22px;font-size:12px;color:rgba(251,250,243,.7)}
+
+.rev{opacity:0;transform:translateY(28px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.rev.in{opacity:1;transform:none}
+/* SVG mark used inline below — swap for the brand's own symbol */
+</style>
+</head>
+<body>
+<!-- define the mark once, reuse via <use> -->
+<svg width="0" height="0" style="position:absolute"><symbol id="mark" viewBox="0 0 32 32"><path d="M16 29C16 20 11 15 4 14c0 0 .5 9 7 12 0 0-3-7-3-11 0 0 6 3 8 8 0 0 1-9-6-15 0 0 9 1 9 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 29C16 19 21 14 28 13c0 0-.5 9-7 12 0 0 3-7 3-11 0 0-6 3-8 8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol></svg>
+
+<header class="mast"><div class="wrap">
+  <div class="brandmark"><svg class="leaf"><use href="#mark"/></svg>BRAND</div>
+  <div class="tail">Out&#8209;of&#8209;Home · NYC Transit · SEASON YEAR</div>
+</div></header>
+
+<section class="hero"><div class="hero-frame">
+  <img src="HERO_TAKEOVER_PUBLIC_URL" alt="Brand platform takeover"/>
+  <div class="hero-cap"><div class="c-left">Campaign film still<b>STATION — Platform wall takeover</b></div><div class="c-right">BRAND · ONE-LINE POSITIONING</div></div>
+</div></section>
+
+<div class="wrap"><section class="lede rev">
+  <div class="kicker">The Brief</div>
+  <h1>OPENING TENSION HEADLINE. <em>The human turn.</em></h1>
+  <p class="sub">One-paragraph setup: the belief behind the brand, and why taking it onto the NYC subway — the most unforgiving canvas in advertising — proves it.</p>
+  <div class="meta">
+    <div><span>Client</span><b>BRAND</b></div><div><span>Scope</span><b>Identity + OOH</b></div>
+    <div><span>Market</span><b>NYC Transit (MTA)</b></div><div><span>Idea</span><b>CAMPAIGN LINE</b></div>
+  </div>
+</section></div>
+
+<section class="manifesto rev"><div class="wrap">
+  <div class="kicker">The Idea</div>
+  <p class="big">The category does X. <em>BRAND does the human opposite.</em></p>
+  <div class="row">
+    <div class="it"><h4>The tension</h4><p>Why people disengage today.</p></div>
+    <div class="it"><h4>The move</h4><p>The creative/strategic shift.</p></div>
+    <div class="it"><h4>The proof</h4><p>What the campaign feels like in the station.</p></div>
+  </div>
+</div></section>
+
+<div class="wrap"><section class="sec rev">
+  <div class="sec-head"><span class="no">01</span><h2>The identity</h2><div class="h-tail">One line describing the system's point of view.</div></div>
+  <div class="bb-grid">
+    <div class="card bb-logo"><span class="lbl">Wordmark &amp; mark</span>
+      <div><div class="big">brand<svg class="leaf"><use href="#mark"/></svg></div>
+        <div class="variants">
+          <span class="chiplogo on-accent">brand<svg class="leaf"><use href="#mark"/></svg></span>
+          <span class="chiplogo on-ink">brand<svg class="leaf"><use href="#mark"/></svg></span>
+          <span class="chiplogo on-pop">brand<svg class="leaf"><use href="#mark"/></svg></span>
+        </div></div>
+    </div>
+    <div class="card bb-pal"><span class="lbl">Palette</span><div class="swrow">
+      <div class="sw"><div class="chip" style="background:#0C2A1E"></div><div class="nm">Ink</div><div class="hx">#0C2A1E</div></div>
+      <div class="sw"><div class="chip" style="background:#1FA866"></div><div class="nm">Accent</div><div class="hx">#1FA866</div></div>
+      <div class="sw"><div class="chip" style="background:#FBFAF3"></div><div class="nm">Paper</div><div class="hx">#FBFAF3</div></div>
+      <div class="sw"><div class="chip" style="background:#F6B53C"></div><div class="nm">Pop 1</div><div class="hx">#F6B53C</div></div>
+      <div class="sw"><div class="chip" style="background:#FF6A52"></div><div class="nm">Pop 2</div><div class="hx">#FF6A52</div></div>
+    </div></div>
+    <div class="card bb-type"><span class="lbl">Typography</span>
+      <div class="spec">Display <em>specimen.</em></div>
+      <div class="specsub">A sentence in the text face showing tone.</div>
+      <div class="tmeta"><div><span>Display</span><b>DISPLAY FONT</b></div><div><span>Text</span><b>TEXT FONT</b></div><div><span>Case</span><b>Sentence case</b></div></div>
+    </div>
+    <div class="card bb-voice"><span class="lbl">Verbal identity</span><ul>
+      <li><span class="d"></span>Voice principle one.</li><li><span class="d"></span>Voice principle two.</li>
+      <li><span class="d"></span>Voice principle three.</li><li><span class="d"></span>Voice principle four.</li>
+    </ul></div>
+  </div>
+</section></div>
+
+<div class="wrap"><section class="sec rev">
+  <div class="sec-head"><span class="no">02</span><h2>The campaign, in context</h2><div class="h-tail">Across platforms, trains, dioramas and digital screens — one cohesive voice.</div></div>
+  <div class="workgap">
+    <div class="shot-unit rev"><div class="shot feature"><img src="CAR_CARDS_PUBLIC_URL" alt="Interior car cards"/></div>
+      <div class="cap"><div class="ct"><div class="fmt">Interior car cards · Full train wrap</div><h3>"HEADLINE 01"</h3><p>Rationale.</p></div><div class="idx">01 / 06</div></div></div>
+    <div class="two">
+      <div class="shot-unit rev"><div class="shot"><img src="POSTER_PUBLIC_URL" alt="Platform 2-sheet"/></div>
+        <div class="cap"><div class="ct"><div class="fmt">Platform 2&#8209;sheet</div><h3>"HEADLINE 02"</h3><p>Rationale.</p></div><div class="idx">02 / 06</div></div></div>
+      <div class="shot-unit rev"><div class="shot"><img src="DIORAMA_PUBLIC_URL" alt="Backlit diorama"/></div>
+        <div class="cap"><div class="ct"><div class="fmt">Backlit diorama</div><h3>"HEADLINE 03"</h3><p>Rationale.</p></div><div class="idx">03 / 06</div></div></div>
+    </div>
+    <div class="shot-unit rev"><div class="shot feature"><img src="DOMINATION_PUBLIC_URL" alt="Station domination"/></div>
+      <div class="cap"><div class="ct"><div class="fmt">Station domination · Stairs &amp; columns</div><h3>"HEADLINE 04"</h3><p>Rationale.</p></div><div class="idx">04 / 06</div></div></div>
+    <div class="two">
+      <div class="shot-unit rev"><div class="shot"><img src="DIGITAL_PUBLIC_URL" alt="Digital platform screen"/></div>
+        <div class="cap"><div class="ct"><div class="fmt">Digital platform screen</div><h3>"HEADLINE 05"</h3><p>Rationale.</p></div><div class="idx">05 / 06</div></div></div>
+      <div class="shot-unit rev"><div class="shot"><img src="INAPP_PUBLIC_URL" alt="App in hand"/></div>
+        <div class="cap"><div class="ct"><div class="fmt">The payoff · In&#8209;app</div><h3>"HEADLINE 06"</h3><p>The product speaks the same language as the campaign.</p></div><div class="idx">06 / 06</div></div></div>
+    </div>
+  </div>
+</section></div>
+
+<section class="lines rev"><div class="wrap sec">
+  <div class="sec-head"><span class="no">03</span><h2>The voice, on the wall</h2><div class="h-tail">One campaign, one personality.</div></div>
+  <div class="grid">
+    <div class="linecard hl"><q>BRAND <span class="g">LINE.</span></q><div class="tag">Brand line</div></div>
+    <div class="linecard"><q>Headline 02.</q><div class="tag">Car card</div></div>
+    <div class="linecard"><q>Headline 03.</q><div class="tag">2-sheet</div></div>
+    <div class="linecard co"><q>Headline 04.</q><div class="tag">Domination</div></div>
+    <div class="linecard"><q>Headline 05.</q><div class="tag">Diorama</div></div>
+    <div class="linecard"><q>Headline 06.</q><div class="tag">Digital</div></div>
+  </div>
+</div></section>
+
+<div class="wrap"><section class="sec plan rev">
+  <div class="sec-head"><span class="no">04</span><h2>The run</h2><div class="h-tail">A flight built for frequency.</div></div>
+  <table><thead><tr><th>Format</th><th>Placement</th><th>Line</th><th class="qt">Units</th></tr></thead>
+  <tbody>
+    <tr><td>Platform wall takeover</td><td>Key hubs</td><td>Brand line</td><td class="qt">12</td></tr>
+    <tr><td>Interior car cards</td><td>Full-train wraps</td><td>Headline 02</td><td class="qt">2,400</td></tr>
+    <tr><td>2-sheet posters</td><td>High-dwell platforms</td><td>Headline 03</td><td class="qt">340</td></tr>
+    <tr><td>Backlit dioramas</td><td>Transfer corridors</td><td>Headline 04</td><td class="qt">120</td></tr>
+    <tr><td>Station domination</td><td>Flagship station</td><td>Headline 05</td><td class="qt">1</td></tr>
+    <tr><td>Digital screens</td><td>Network-wide rotation</td><td>Headline 06</td><td class="qt">1,800</td></tr>
+  </tbody></table>
+</section></div>
+
+<footer class="foot rev"><div class="wrap">
+  <div class="big">brand<svg class="leaf"><use href="#mark"/></svg></div>
+  <div class="tl">ENDLINE / TAGLINE.</div>
+  <div class="meta"><span>BRAND — Identity &amp; NYC Transit Campaign</span><span>Concept · Identity · Copy · Art Direction</span><span>SEASON YEAR</span></div>
+</div></footer>
+
+<script>
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:.12});
+document.querySelectorAll('.rev').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
+
